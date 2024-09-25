@@ -18,6 +18,8 @@ class GraphNode:
         return self.adjacencies[i] 
 
     def append(self, *args):
+        if isinstance(args[0], list):
+            self.adjacencies += args[0]
         self.adjacencies += args 
 
     def __iter__(self):
