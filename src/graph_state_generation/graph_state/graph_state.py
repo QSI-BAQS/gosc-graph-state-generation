@@ -1,10 +1,14 @@
 '''
-    Graph Object
+    Graph State Object
 '''
 
-from graph_state_generation.graph import graph_node 
+from graph_state_generation.graph_state import graph_node
 
-class GraphState: 
+class GraphState:
+    '''
+        Graph State Object
+    '''
+
     def __init__(self, n_vertices):
 
         self.n_vertices = n_vertices
