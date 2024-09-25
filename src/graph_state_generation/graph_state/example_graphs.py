@@ -53,3 +53,13 @@ def graph_complete(n_vertices : int):
     for i in range(n_vertices):
         graph[i].append(lst[:i], lst[i + 1:])
     return graph
+
+def graph_star(n_verticies : int):
+    '''
+        Star graph
+    '''
+    graph = graph_state.GraphState(n_vertices)
+    for i in range(1, n_vertices):
+        graph.append(0, i)
+    return graph
+
