@@ -5,6 +5,7 @@
 import bisect
 from itertools import chain
 
+
 class GraphNode:
     '''
         Graph node object
@@ -12,7 +13,11 @@ class GraphNode:
     init_zero = object()
     init_plus = object()
 
-    def __init__(self, qubit_idx: int, *args, init_state=None, adjacencies=None):
+    def __init__(self,
+                 qubit_idx: int,
+                 *args,
+                 init_state=None,
+                 adjacencies=None):
         '''
             Graph node object
         '''
@@ -27,7 +32,7 @@ class GraphNode:
         self.adjacencies = list(args) + adjacencies
         adjacencies.sort()
 
-    def __getitem__(self, idx : int) -> int:
+    def __getitem__(self, idx: int) -> int:
         '''
             Gets the nth item from the adjacencies
         '''
@@ -42,7 +47,6 @@ class GraphNode:
 
         for i in args:
             bisect.insort(self.adjacencies, i)
-
 
     def __iter__(self):
         '''
