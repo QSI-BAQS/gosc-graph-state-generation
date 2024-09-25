@@ -2,7 +2,7 @@
     Linear Mapper
 '''
 import ctypes
-from graph_state_generation.mappers import mapper 
+from graph_state_generation.mappers import mapper
 
 class LinearMapper(mapper.Mapper):
     '''
