@@ -12,7 +12,7 @@ class GraphState:
     def __init__(self, n_vertices):
 
         self.n_vertices = n_vertices
-        self.vertices = [graph_node.GraphNode() for i in range(self.n_vertices)]
+        self.vertices = [graph_node.GraphNode(i) for i in range(self.n_vertices)]
 
     def __getitem__(self, idx):
         '''
@@ -24,3 +24,7 @@ class GraphState:
 
     def __repr__(self):
         return ', '.join(map(str, self.vertices))
+
+    def append(self, idx : int, jdx : int):
+        self[idx].append(jdx)
+        self[jdx].append(idx)

@@ -12,7 +12,7 @@ class GraphNode:
     init_zero = object()
     init_plus = object()
 
-    def __init__(self, *args, init_state=None, adjacencies=None):
+    def __init__(self, qubit_idx: int, *args, init_state=None, adjacencies=None):
         '''
             Graph node object
         '''
@@ -22,8 +22,9 @@ class GraphNode:
         if init_state is None:
             init_state = GraphNode.init_zero
 
+        self.qubit_idx = qubit_idx
         self.init_state = init_state
-        self.adjacencies = args + adjacencies
+        self.adjacencies = list(args) + adjacencies
         adjacencies.sort()
 
     def __getitem__(self, idx : int) -> int:
