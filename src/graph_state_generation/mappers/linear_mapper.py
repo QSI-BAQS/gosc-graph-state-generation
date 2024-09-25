@@ -2,9 +2,9 @@
     Linear Mapper
 '''
 import ctypes
-from mapper import Mapper
+from graph_state_generation.mappers import mapper 
 
-class LinearMapper(Mapper):
+class LinearMapper(mapper.Mapper):
     '''
         Linear Mapper
         Maps qubit i to position i

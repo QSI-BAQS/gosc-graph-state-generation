@@ -4,9 +4,9 @@
 import ctypes
 import random
 
-from mapper import Mapper
+from graph_state_generation.mappers import mapper 
 
-class RandomMapper(Mapper):
+class RandomMapper(mapper.Mapper):
     '''
         Random Mapper
     '''

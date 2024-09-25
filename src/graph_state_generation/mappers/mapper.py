@@ -10,16 +10,18 @@ class Mapper(abc.ABC):
         Base abstract mapper object
     '''
 
-    def __init__(self, n_elements : int, *args, **kwargs):
+    def __init__(self, graph, *args, **kwargs):
         '''
         Mapper Object
         '''
+        n_elements = graph.n_vertices
         if n_elements > (1 << 32) - 2:
             raise IndexError("Map only supports up to 2**32 - 2 elements")
 
         if n_elements <= 0:
             raise IndexError("Map needs at least one element")
 
+        self.graph = graph
         self.n_elements = n_elements
         self.map = (ctypes.c_int32 * self.n_elements)()
         self.mapping_fn(*args, **kwargs)
@@ -52,3 +54,6 @@ class Mapper(abc.ABC):
 
     def __str__(self):
         return self.__repr__()
+
+    def __len__(self):
+        return self.n_elements
