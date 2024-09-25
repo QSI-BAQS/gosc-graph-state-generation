@@ -26,5 +26,8 @@ class GraphState:
         return ', '.join(map(str, self.vertices))
 
     def append(self, idx : int, jdx : int):
+        '''
+            Adds an adjacency between nodes idx and jdx 
+        '''
         self[idx].append(jdx)
         self[jdx].append(idx)
