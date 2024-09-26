@@ -1,7 +1,4 @@
-from graph_state_generation.optimizers.stabilizer_measurement_scheduler import (
-    greedy_stabilizer_measurement_scheduler,
-)
-
+from graph_state_generation.schedulers import greedy_stabiliser_measurement_scheduler
 
 def test_greedy_scheduler_0():
     stabilizers_set_0 = [(0, (0, 5)), (1, (1, 2)), (2, (1, 10))]

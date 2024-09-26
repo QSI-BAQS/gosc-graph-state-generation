@@ -1,7 +1,7 @@
 import unittest
 from graph_state_generation.graph_state import graph_state, graph_node 
 from graph_state_generation.mappers import linear_mapper
-from graph_state_generation.schedulers import greedy_stabiliser_measurement_scheduler 
+from graph_state_generation.schedulers import greedy_cz_scheduler 
 
 
 class WeightedMapperTest(unittest.TestCase):
@@ -15,7 +15,9 @@ class WeightedMapperTest(unittest.TestCase):
 
         mapper = linear_mapper.LinearMapper(graph)
         
-        sched = greedy_stabiliser_measurement_scheduler.GreedyStabiliserMeasurementSchedulerLeft(graph, mapper) 
+        sched = greedy_cz_scheduler.GreedyCZScheduler(graph, mapper) 
+        sched()
+        assert(1 == len(sched.schedule_layers)) 
 
 
 
