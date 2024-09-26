@@ -15,4 +15,4 @@ class LinearMapper(mapper.Mapper):
         Linear map
         '''
         for i in range(self.n_elements):
-            self.map[i] = ctypes.c_int32(i)
+            self[i] = i

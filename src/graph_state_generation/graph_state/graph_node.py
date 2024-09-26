@@ -58,6 +58,12 @@ class GraphNode:
                 bisect.bisect_left(self.adjacencies, i)
             )
 
+    def index(self, val):
+        return self.adjacencies.index(val)
+
+    def pop(self, val):
+        return self.adjacencies.pop(val)
+
 
     def __iter__(self):
         '''

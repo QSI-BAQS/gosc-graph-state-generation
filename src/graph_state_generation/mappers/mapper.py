@@ -32,22 +32,29 @@ class Mapper(abc.ABC):
             Abstract mapping function, called to create the map
         '''
 
-    def __getitem__(self, idx: int) -> ctypes.c_int32:
+    def __getitem__(self, idx: int):
         '''
             Wrapper to get an item from the map
         '''
         if idx > self.n_elements or idx < 0:
             raise IndexError()
-        return self.map[idx]
+    
+        value = self.map[idx]
 
+        if not isinstance(value, int):
+            value = value.value 
+        return value
+ 
     def __setitem__(self, idx: int, value: int):
         if idx > self.n_elements or idx < 0:
             raise IndexError()
-        self.map[idx] = ctypes.c_int32(value)
+        if isinstance(value, int):
+            value = ctypes.c_int32(value)
+        self.map[idx] = value 
 
     def __iter__(self):
         for i in range(self.n_elements):
-            yield self.map[i]
+            yield self[i]
 
     def __repr__(self):
         return ', '.join(i.__str__() for i in self.__iter__())

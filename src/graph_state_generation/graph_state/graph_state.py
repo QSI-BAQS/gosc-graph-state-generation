@@ -38,6 +38,10 @@ class GraphState:
         self[idx].append(jdx)
         self[jdx].append(idx)
 
+    def pop(self, idx):
+        self.vertices.pop(idx)
+        self.n_verticies = len(self.vertices)
+
     def tikz(self):
         '''
             Creates a tikz depiction of the graph

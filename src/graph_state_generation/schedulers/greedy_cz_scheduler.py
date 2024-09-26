@@ -1,8 +1,11 @@
-''' Constructs a greedy schedule
+'''
+ Constructs a greedy schedule
 '''
 import copy
 import bisect
 from graph_state_generation.schedulers import scheduler
+
+
 
 
 class GreedyCZScheduler(scheduler.Scheduler):
@@ -15,32 +18,27 @@ class GreedyCZScheduler(scheduler.Scheduler):
     graph_node = 1
     mapped_graph = 0
 
+    def __init__(self, *args, **kwargs): 
+        super().__init__(*args, MappedNode=CZMappedNode, **kwargs)
+
     def greedy_schedule(self, *args, **kwargs):
         '''
             Constructs a greedy schedule
         '''
 
-        # We will be changing the associated adjacency matrix
-        self.graph = copy.deepcopy(self.graph)
-
         # Copy the segments and sort by their leftmost value
-        segments = list(zip(map(self.apply_mapper, self.graph), self.graph))
-        segments.sort(
-                key=lambda x: x[0][self.left]
-            )
-
-        # Map from nodes to mapped segments
-        segment_dict = {segment[self.graph_node]: segment for segment in segments}
-
         curr_right = 0
 
         # Initial layer
         self.schedule_layers.append([])
 
+        segments = list(self.mapped_segments) 
+        segments.sort(key=lambda x: x.left)
+
         # Greedily consume segments until all segments have been scheduled
         while len(segments) > 0:
             # Reached end of layer
-            if segments[-1][0][self.left] < curr_right:
+            if segments[-1].left < curr_right:
                 curr_right = 0
                 self.schedule_layers.append([])
                 continue
@@ -49,25 +47,70 @@ class GreedyCZScheduler(scheduler.Scheduler):
             next_segment_idx = bisect.bisect_left(
                 segments,
                 curr_right,
-                key=lambda x: x[0][self.left])
-            mapped_node, graph_node = segments.pop(next_segment_idx)
-
+                key=lambda x: x.left)
+            mapped_node = segments.pop(next_segment_idx)
+ 
             # Remove reciprocal edges
-            for neighbour in graph_node:
-                neighbouring_node = self.graph[neighbour]
+            for neighbouring_node in mapped_node.references:
+                if len(neighbouring_node) <= 1:
+                    # Remove node
+                    # Segments is sorted on left most element, hence multiple objects may share the same index
+                    index = bisect.bisect_left(segments, neighbouring_node.left, key=lambda x: x.left)
+                    while segments[index].qubit_idx != neighbouring_node.qubit_idx:
+                        index += 1 
+                    segments.pop(index)
 
-                neighbouring_node.remove(graph_node.qubit_idx)
-                segments.remove(segment_dict[neighbouring_node])
+                    index = bisect.bisect_left(self.graph.vertices, neighbouring_node.qubit_idx, key=lambda x: x.qubit_idx )
+                    self.graph.pop(index)
+                    self.mapped_segments.pop(index)
+                    continue
 
+
+                position_update = neighbouring_node.remove_edge(mapped_node.graph_node.qubit_idx)
                 # Only re-add node if it still has edges
-                if len(self.graph[neighbour]) > 0:
-                    segment = (self.apply_mapper(neighbouring_node), neighbouring_node)
-                    segment_dict[segment[self.graph_node]] = segment   
-                    bisect.insort(segments, segment, key=lambda x: x[0][self.left])
-
+                if position_update is not None:
+                    # Re-sort node
+                    index = bisect.bisect_left(segments, position_update, key=lambda x: x.left)
+                    while segments[index].qubit_idx != neighbouring_node.qubit_idx:
+                        index += 1 
+                    segments.pop(index)
+                    bisect.insort(segments, neighbouring_node, key=lambda x: x.left)
+                     
+                    
             # Append consumed node to schedule
-            self.schedule_layers[-1].append(graph_node)
-            curr_right = mapped_node[self.right] + 1
+            self.schedule_layers[-1].append(mapped_node)
+            curr_right = mapped_node.right + 1
 
     def schedule(self, *args, **kwargs):
         return self.greedy_schedule(*args, **kwargs)
+
+
+class CZMappedNode(scheduler.MappedNode):
+    def __init__(self, graph_node, scheduler):  
+        super().__init__(graph_node, scheduler)
+
+        self.left = min(self.mapped_values)
+        self.right = max(self.mapped_values)
+
+    def remove_edge(self, idx) -> int | None: 
+        edge_idx = self.graph_node.index(idx)
+
+        update_left = None 
+        update_right = None 
+        if self.mapped_values[edge_idx] == self.left:
+            update_left = self.left 
+
+        if self.mapped_values[edge_idx] == self.right:
+            update_right = self.left 
+
+        super().remove_edge(idx)
+
+        if update_right is not None:
+            self.right = max(self.mapped_values)
+
+        if update_left is not None:
+            self.left = min(self.mapped_values)
+            return update_left
+
+        return None 
+
