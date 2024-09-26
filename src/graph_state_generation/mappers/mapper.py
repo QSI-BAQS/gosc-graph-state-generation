@@ -1,16 +1,16 @@
 '''
     Base abstract mapper object
 '''
-
 import ctypes
 import abc
+from graph_state_generation.graph_state import graph_state
 
 class Mapper(abc.ABC):
     '''
         Base abstract mapper object
     '''
 
-    def __init__(self, graph, *args, **kwargs):
+    def __init__(self, graph: graph_state.GraphState, *args, **kwargs):
         '''
         Mapper Object
         '''
@@ -32,7 +32,7 @@ class Mapper(abc.ABC):
             Abstract mapping function, called to create the map
         '''
 
-    def __getitem__(self, idx:int) -> ctypes.c_int32:
+    def __getitem__(self, idx: int) -> ctypes.c_int32:
         '''
             Wrapper to get an item from the map
         '''
@@ -40,7 +40,7 @@ class Mapper(abc.ABC):
             raise IndexError()
         return self.map[idx]
 
-    def __setitem__(self, idx:int, value:int):
+    def __setitem__(self, idx: int, value: int):
         if idx > self.n_elements or idx < 0:
             raise IndexError()
         self.map[idx] = ctypes.c_int32(value)
