@@ -42,7 +42,7 @@ def graph_random(n_vertices: int, density=0.1):
         Random graph
     '''
     graph = graph_state.GraphState(n_vertices)
-    for i in range(n_vertices - 1):
+    for i in range(n_vertices - 2):
         for j in random.sample(
                 range(i + 1, n_vertices),
                 math.ceil(density * n_vertices - i)):

@@ -48,8 +48,26 @@ class GraphNode:
         for i in args:
             bisect.insort(self.adjacencies, i)
 
+    def remove(self, *idx):
+        '''
+            Removes elements from the adjacency matrix
+            Assumes that the elements are still sorted
+        '''
+        for i in idx:
+            self.adjacencies.pop(
+                bisect.bisect_left(self.adjacencies, i)
+            )
+
+
     def __iter__(self):
         '''
             Iterates over the edges
         '''
         return self.adjacencies.__iter__()
+
+
+    def __len__(self):
+        return self.adjacencies.__len__()
+
+    def __repr__(self):
+        return f"{self.qubit_idx}: {self.adjacencies}"
