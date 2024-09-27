@@ -103,7 +103,7 @@ class CZMappedNode(MappedNode):
         self.left = min(self.mapped_values)
         self.right = max(self.mapped_values)
 
-    def remove_edge(self, idx) -> int | None:
+    def remove_edge(self, idx:)
         '''
             Removes an edge from the node
         '''
