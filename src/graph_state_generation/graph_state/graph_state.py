@@ -39,8 +39,11 @@ class GraphState:
         self[jdx].append(idx)
 
     def pop(self, idx):
+        '''
+            Proxies a pop operation on the vertices
+        '''
         self.vertices.pop(idx)
-        self.n_verticies = len(self.vertices)
+        self.n_vertices = len(self.vertices)
 
     def tikz(self):
         '''

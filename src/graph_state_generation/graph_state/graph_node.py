@@ -59,18 +59,22 @@ class GraphNode:
             )
 
     def index(self, val):
+        '''
+            Proxies the index function over the adjacency list
+        '''
         return self.adjacencies.index(val)
 
     def pop(self, val):
+        '''
+            Proxies the pop function over the adjacency list
+        '''
         return self.adjacencies.pop(val)
-
 
     def __iter__(self):
         '''
             Iterates over the edges
         '''
         return self.adjacencies.__iter__()
-
 
     def __len__(self):
         return self.adjacencies.__len__()

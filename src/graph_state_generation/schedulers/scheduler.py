@@ -84,7 +84,7 @@ class Scheduler(abc.ABC):
         )
         if call_scheduler:
             self.schedule()
-            self.called = True 
+            self.called = True
 
     def apply_mapper(self, node: GraphNode) -> list:
         '''

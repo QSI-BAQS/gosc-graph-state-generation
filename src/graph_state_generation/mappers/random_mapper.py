@@ -6,6 +6,7 @@ import random
 
 from graph_state_generation.mappers import mapper
 
+
 class RandomMapper(mapper.Mapper):
     '''
         Random Mapper

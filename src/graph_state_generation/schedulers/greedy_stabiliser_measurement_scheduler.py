@@ -21,7 +21,7 @@ class GreedyStabiliserMeasurementSchedulerLeft(scheduler.Scheduler):
 
         # Copy the segments
         lr_segments = list(zip(map(self.get_lr, self.graph), self.graph))
-        lr_segments.sort(key=lambda x: x[0][self.left]) # Gets the self.left value
+        lr_segments.sort(key=lambda x: x[0][self.left])  # Gets the self.left value
 
         curr_right = 0
         curr_layer = 0

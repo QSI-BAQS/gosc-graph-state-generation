@@ -3,12 +3,13 @@
 '''
 from graph_state_generation.mappers import random_mapper
 
+
 class WeightSortMapper(random_mapper.RandomMapper):
     '''
         Weight sort Mapper
-        Attempts to minimise the number of colliding stabilisers via bubble sort 
+        Attempts to minimise the number of colliding stabilisers via bubble sort
     '''
-    ALL_PASSES=object()
+    ALL_PASSES = object()
 
     def mapping_fn(self, *args, n_passes=1, **kwargs):
         '''
@@ -51,13 +52,12 @@ class WeightSortMapper(random_mapper.RandomMapper):
                     pairwise_weight += 1
         return pairwise_weight
 
-
     def graph_weight(self):
         '''
             Calculates the weight of all intersections on the map
         '''
         weight = 0
-        for i in range(self.n_elements): # Ordered by current map
+        for i in range(self.n_elements):  # Ordered by current map
             stab_lower = self.graph[i]
             for stab_upper in self.graph[i + 1:]:
                 for edge_lower in stab_lower:

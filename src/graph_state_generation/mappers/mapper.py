@@ -5,6 +5,7 @@ import ctypes
 import abc
 from graph_state_generation.graph_state import graph_state
 
+
 class Mapper(abc.ABC):
     '''
         Base abstract mapper object
@@ -38,19 +39,19 @@ class Mapper(abc.ABC):
         '''
         if idx > self.n_elements or idx < 0:
             raise IndexError()
-    
+
         value = self.map[idx]
 
         if not isinstance(value, int):
-            value = value.value 
+            value = value.value
         return value
- 
+
     def __setitem__(self, idx: int, value: int):
         if idx > self.n_elements or idx < 0:
             raise IndexError()
         if isinstance(value, int):
             value = ctypes.c_int32(value)
-        self.map[idx] = value 
+        self.map[idx] = value
 
     def __iter__(self):
         for i in range(self.n_elements):
