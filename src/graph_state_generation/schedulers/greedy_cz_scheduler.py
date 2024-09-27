@@ -16,7 +16,7 @@ class GreedyCZScheduler(Scheduler):
     mapped_graph = 0
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, MappedNode=CZMappedNode, **kwargs)
+        super().__init__(*args, mapped_node=CZMappedNode, **kwargs)
 
     def greedy_schedule(self, *args, **kwargs):
         '''

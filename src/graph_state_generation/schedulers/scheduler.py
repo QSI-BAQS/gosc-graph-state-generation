@@ -65,12 +65,14 @@ class Scheduler(abc.ABC):
                  mapper: Mapper,
                  *args,
                  mapped_node=MappedNode,
+                 call_scheduler=True,
                  **kwargs):
         '''
             scheduler base object
         '''
         self.graph = copy.deepcopy(graph)
         self.mapper = mapper
+        self.called = False
         self.schedule_layers = []
         self.mapped_segments = list(map(lambda x: mapped_node(x, self), self.graph))
         reduce(
@@ -80,6 +82,9 @@ class Scheduler(abc.ABC):
                 self.mapped_segments
             )
         )
+        if call_scheduler:
+            self.schedule()
+            self.called = True 
 
     def apply_mapper(self, node: GraphNode) -> list:
         '''
@@ -91,6 +96,7 @@ class Scheduler(abc.ABC):
 
     def __call__(self, *args, **kwargs):
         self.schedule(*args, **kwargs)
+        self.called = True
 
     def __len__(self):
         return self.schedule_layers.__len__()
