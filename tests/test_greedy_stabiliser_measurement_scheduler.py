@@ -1,7 +1,8 @@
 import unittest
 from graph_state_generation.graph_state import graph_state, graph_node 
+from graph_state_generation.graph_state import graph_state, graph_node, example_graphs
 from graph_state_generation.mappers import linear_mapper
-from graph_state_generation.schedulers import greedy_stabiliser_measurement_scheduler 
+from graph_state_generation.schedulers.greedy_stabiliser_measurement_scheduler import GreedyStabiliserMeasurementSchedulerLeft
 
 
 class WeightedMapperTest(unittest.TestCase):
@@ -14,9 +15,16 @@ class WeightedMapperTest(unittest.TestCase):
         graph[2].append(*[0])
 
         mapper = linear_mapper.LinearMapper(graph)
-        
-        sched = greedy_stabiliser_measurement_scheduler.GreedyStabiliserMeasurementSchedulerLeft(graph, mapper) 
+        sched = GreedyStabiliserMeasurementSchedulerLeft(graph, mapper) 
+        # No state prep reductions applied here and all 
+        # stabilisers share a dependency on qubits 0
+        assert(len(sched) == 3)
 
+    def test_tree_instances(self, n_qubits=10): 
+        graph = example_graphs.graph_binary_tree(n_qubits) 
+        mapper = linear_mapper.LinearMapper(graph)
+        sched = GreedyStabiliserMeasurementSchedulerLeft(graph, mapper) 
+        assert(len(sched) < len(graph))
 
 
 if __name__ == '__main__':
