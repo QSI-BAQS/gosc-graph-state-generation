@@ -82,8 +82,13 @@ class GreedyCZScheduler(Scheduler):
                     bisect.insort(segments, neighbouring_node, key=lambda x: x.left)
 
             # Append consumed node to schedule
-            self.schedule_layers[-1].append(mapped_node)
-            curr_right = mapped_node.right + 1
+            if len(mapped_node) > 0:
+                self.schedule_layers[-1].append(mapped_node)
+                curr_right = mapped_node.right + 1
+
+        # If the last layer was purely decorative  
+        if len(self.schedule_layers[-1]) == 0:
+            self.schedule_layers.pop(-1)
 
     def schedule(self, *args, **kwargs):
         '''

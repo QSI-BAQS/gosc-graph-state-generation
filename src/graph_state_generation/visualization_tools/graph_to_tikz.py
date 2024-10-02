@@ -2,7 +2,6 @@
     Provides a tikz representation of the graph
 '''
 
-
 header = r'''
 %!TEX options=--shell-escape
 \documentclass[tikz]{standalone}
@@ -30,8 +29,6 @@ header = r'''
 
 \begin{document}
 \begin{tikzpicture}[]
-
-
 '''
 
 
