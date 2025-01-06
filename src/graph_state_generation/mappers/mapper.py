@@ -3,7 +3,11 @@
 '''
 import ctypes
 import abc
+
+import numpy as np
+
 from graph_state_generation.graph_state import graph_state
+
 
 
 class Mapper(abc.ABC):
@@ -65,3 +69,24 @@ class Mapper(abc.ABC):
 
     def __len__(self):
         return self.n_elements
+
+    @abc.abstractmethod
+    def position_xy(self, qubit_index: int) -> tuple[int, int]:
+        '''
+            Returns qubit position given qubit_idx
+        '''
+        ...
+
+    @abc.abstractmethod
+    def position_x_group(self, qubit_index: int) -> int:
+        '''
+            Grouping function over X 
+        '''
+        ...
+
+    @abc.abstractmethod
+    def position_y_group(self, qubit_index: int) -> int:
+        '''
+            Grouping function over Y 
+        '''
+        ...

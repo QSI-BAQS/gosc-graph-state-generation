@@ -16,3 +16,15 @@ class LinearMapper(mapper.Mapper):
         '''
         for i in range(self.n_elements):
             self[i] = i
+
+    def position_xy(self, qubit_index: int) -> tuple[int, int]:
+        '''
+            Returns qubit position given qubit_idx
+        '''
+        return (self[qubit_index], 0)
+
+    def position_x_group(self, qubit_index: int) -> int:
+        return self[qubit_index]
+
+    def position_y_group(self, qubit_index: int) -> int:
+        return 0 
