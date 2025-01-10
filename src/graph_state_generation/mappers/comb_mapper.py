@@ -62,7 +62,6 @@ tines
         mapper_fn
         Linear map
         '''
-        kwargs |= self.mapper_kwargs
         for i in range(self.n_elements):
             self[i] = i
 
