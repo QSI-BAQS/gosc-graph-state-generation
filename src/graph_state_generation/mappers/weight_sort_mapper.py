@@ -17,7 +17,7 @@ class BaseWeightSortMapper(random_mapper.BaseRandomMapper):
         mapper_fn
         Linear map
         '''
-        random_mapper.RandomLinearMapper.mapping_fn(self)
+        random_mapper.BaseRandomMapper.mapping_fn(self)
 
         if n_passes == BaseWeightSortMapper.ALL_PASSES:
             n_passes = self.n_elements

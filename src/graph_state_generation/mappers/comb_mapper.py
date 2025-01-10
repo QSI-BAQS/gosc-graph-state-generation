@@ -14,7 +14,9 @@ class BaseCombMapper(mapper.Mapper):
         graph,  # Graph obj
         height: int,  # Height of comb region
         width: int,  # Width of comb region
+        *args, 
         comb_spacing: int = 1,  # Spacing
+        **kwargs
     ):
         '''
 Constructor for a comb mapper
@@ -35,7 +37,10 @@ tines
         self.n_tines = (width // (self.tine_width))  
         self.tine_size = height * 2
 
-        super().__init__(graph)
+        if self.n_tines * self.height * 2 > len(graph): 
+            raise IndexError("Not enough registers")
+
+        super().__init__(graph, *args, **kwargs)
 
     def _tine(self, index): 
         '''
@@ -57,6 +62,7 @@ tines
         mapper_fn
         Linear map
         '''
+        kwargs |= self.mapper_kwargs
         for i in range(self.n_elements):
             self[i] = i
 
