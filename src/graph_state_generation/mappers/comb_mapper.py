@@ -65,7 +65,7 @@ tines
 
         tine_idx = self._tine(mapped_index) 
         lr_idx = self._lr(mapped_index)
-        x_pos = tine_indx * self.tine_width + (lr_idx * (self.tine_width - 1)) 
+        x_pos = tine_idx * self.tine_width + (lr_idx * (self.tine_width - 1)) 
         y_pos = self._offset(mapped_index)
         return (x_pos, y_pos)
 
