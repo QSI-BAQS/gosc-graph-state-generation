@@ -18,7 +18,7 @@ class GreedyCZScheduler(Scheduler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, mapped_node=CZMappedNode, **kwargs)
 
-    def greedy_schedule(self, *args, **kwargs):
+    def _greedy_schedule(self, *args, **kwargs):
         '''
             Constructs a greedy schedule
         '''
@@ -90,12 +90,12 @@ class GreedyCZScheduler(Scheduler):
         if len(self.schedule_layers[-1]) == 0:
             self.schedule_layers.pop(-1)
 
-    def schedule(self, *args, **kwargs):
+    def _schedule(self, *args, **kwargs):
         '''
             schedule
             Dispatch method for greedy_schedule
         '''
-        return self.greedy_schedule(*args, **kwargs)
+        self._greedy_schedule(*args, **kwargs)
 
 
 class CZMappedNode(MappedNode):

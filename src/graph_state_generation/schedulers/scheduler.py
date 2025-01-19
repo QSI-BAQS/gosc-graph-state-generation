@@ -96,13 +96,22 @@ class Scheduler(abc.ABC):
 
     def __call__(self, *args, **kwargs):
         self.schedule(*args, **kwargs)
-        self.called = True
 
     def __len__(self):
         return self.schedule_layers.__len__()
 
     @abc.abstractmethod
+    def _schedule(self, *args, **kwargs):
+        '''
+            Wrapper function to separate state handling
+            from the scheduling
+        '''
+
     def schedule(self, *args, **kwargs):
         '''
            Dispatch method for scheduler calls by concrete classes
         '''
+        if not self.called: 
+            self._schedule(*args, **kwargs)
+            self.called = True
+        return self.schedule_layers
