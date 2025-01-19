@@ -3,6 +3,7 @@
 '''
 from graph_state_generation.mappers import random_mapper
 from graph_state_generation.mappers import comb_mapper
+from graph_state_generation.mappers import linear_mapper
 
 
 class BaseWeightSortMapper(random_mapper.BaseRandomMapper):
@@ -67,11 +68,12 @@ class BaseWeightSortMapper(random_mapper.BaseRandomMapper):
                             weight += 1
         return weight
 
-class LinearWeightSortMapper(BaseWeightSortMapper):
+class LinearWeightSortMapper(linear_mapper.LinearMapper, BaseWeightSortMapper):
     '''
         Dispatch class for namespace clarity
     '''
-    pass
+    def mapping_fn(self, *args, **kwargs): 
+        BaseWeightSortMapper.mapping_fn(self, *args, **kwargs) 
 
 class CombWeightSortMapper(comb_mapper.BaseCombMapper, BaseWeightSortMapper):
     '''

@@ -37,7 +37,7 @@ tines
         self.n_tines = (width // (self.tine_width))  
         self.tine_size = height * 2
 
-        if self.n_tines * self.height * 2 > len(graph): 
+        if self.n_tines * self.height * 2 < len(graph): 
             raise IndexError("Not enough registers")
 
         super().__init__(graph, *args, **kwargs)
