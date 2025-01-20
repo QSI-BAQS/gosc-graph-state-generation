@@ -10,5 +10,4 @@ mapped_gs = linear_mapper.LinearMapper(gs)
 
 ws_mapped_gs = weight_sort_mapper.LinearWeightSortMapper(gs)
 
-
 schedule = greedy_cz_scheduler.GreedyCZScheduler(gs, mapped_gs) 

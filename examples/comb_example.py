@@ -6,7 +6,7 @@ height = 10
 width = 3
 spacing = 1
 
-n_vertices = 100
+n_vertices = 10
 gs = example_graphs.graph_binary_tree(n_vertices)
 
 mapped_gs = weight_sort_mapper.CombWeightSortMapper(gs, height, width, n_passes=100)
