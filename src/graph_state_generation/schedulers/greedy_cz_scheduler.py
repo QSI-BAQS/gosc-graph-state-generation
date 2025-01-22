@@ -99,10 +99,6 @@ class GreedyCZScheduler(Scheduler):
         '''
         self._greedy_schedule(*args, **kwargs)
 
-    def flatten(self) -> Generator:
-        flattened = (([i] + j for i, j in layer.items()) for layer in self.schedule_layers)
-        return flattened
-
 
 class CZMappedNode(MappedNode):
     '''

@@ -81,3 +81,6 @@ class GraphNode:
 
     def __repr__(self):
         return f"{self.qubit_idx}: {self.adjacencies}"
+
+    def flatten(self):
+        return [self.qubit_idx] + self.adjacencies 

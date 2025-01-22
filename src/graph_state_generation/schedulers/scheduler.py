@@ -54,6 +54,9 @@ class MappedNode:
 
     def __str__(self):
         return self.graph_node.__str__()
+    
+    def flatten(self):
+        return self.graph_node.flatten()
 
 
 class Scheduler(abc.ABC):
@@ -115,3 +118,6 @@ class Scheduler(abc.ABC):
             self._schedule(*args, **kwargs)
             self.called = True
         return self.schedule_layers
+
+    def flatten(self):
+        return (map(MappedNode.flatten, layer) for layer in self.schedule_layers)
