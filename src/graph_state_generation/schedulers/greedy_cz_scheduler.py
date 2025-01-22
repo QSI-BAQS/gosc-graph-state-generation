@@ -2,6 +2,8 @@
  Constructs a greedy schedule
 '''
 import bisect
+from typing import Generator
+
 from graph_state_generation.schedulers.scheduler import Scheduler, MappedNode
 
 
@@ -96,6 +98,10 @@ class GreedyCZScheduler(Scheduler):
             Dispatch method for greedy_schedule
         '''
         self._greedy_schedule(*args, **kwargs)
+
+    def flatten(self) -> Generator:
+        flattened = (([i] + j for i, j in layer.items()) for layer in self.schedule_layers)
+        return flattened
 
 
 class CZMappedNode(MappedNode):
