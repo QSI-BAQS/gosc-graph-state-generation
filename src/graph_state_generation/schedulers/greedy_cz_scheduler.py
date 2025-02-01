@@ -60,6 +60,7 @@ class GreedyCZScheduler(Scheduler):
                             neighbouring_node.left,
                             key=lambda x: x.left
                         )
+
                     while segments[index].qubit_idx != neighbouring_node.qubit_idx:
                         index += 1
                     segments.pop(index)
@@ -72,15 +73,18 @@ class GreedyCZScheduler(Scheduler):
                     self.graph.pop(index)
                     self.mapped_segments.pop(index)
                     continue
-
+                
+                # New leftmost element of the node
+                neighbouring_idx = bisect.bisect_left(segments, neighbouring_node.left, key=lambda x: x.left)
+                while segments[neighbouring_idx].qubit_idx != neighbouring_node.qubit_idx:
+                    neighbouring_idx += 1
+                
                 position_update = neighbouring_node.remove_edge(mapped_node.graph_node.qubit_idx)
+
                 # Only re-add node if it still has edges
                 if position_update is not None:
                     # Re-sort node
-                    index = bisect.bisect_left(segments, position_update, key=lambda x: x.left)
-                    while segments[index].qubit_idx != neighbouring_node.qubit_idx:
-                        index += 1
-                    segments.pop(index)
+                    segments.pop(neighbouring_idx)
                     bisect.insort(segments, neighbouring_node, key=lambda x: x.left)
 
             # Append consumed node to schedule
