@@ -42,6 +42,19 @@ tines
 
         super().__init__(graph, *args, **kwargs)
 
+   
+    @staticmethod 
+    def get_n_mappable_registers(height, width, comb_spacing):
+        '''
+            Used to forward speculate mappings
+            This does not yet support edge tines
+        '''
+        tine_width = 2 + comb_spacing
+        n_tines = width // tine_width
+        tine_size = height * 2
+
+        return n_tines * tine_size
+
     def _tine(self, index): 
         '''
             Given index returns tine
