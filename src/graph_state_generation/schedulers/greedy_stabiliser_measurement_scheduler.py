@@ -46,7 +46,7 @@ class GreedyStabiliserMeasurementSchedulerLeft(scheduler.Scheduler):
             self.schedule_layers[-1].append(node)
             curr_right = lr[self.right] + 1
 
-    def schedule(self, *args, **kwargs):
+    def _schedule(self, *args, **kwargs):
         return self.greedy_schedule(*args, **kwargs)
 
     def get_lr(self, node: graph_node.GraphNode):
