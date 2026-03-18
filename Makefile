@@ -2,7 +2,7 @@ TARGET=graph_state_generation
 
 .PHONY: all clean test update
 
-all: build 
+all: build
 
 build:
 	pip install -e .
@@ -10,9 +10,9 @@ build:
 test:
 	pytest
 
-update: 
+update:
 	git pull
-	${MAKE} build	
+	${MAKE} build
 
 clean:
-	pip uninstall -y $(TARGET) || true 
+	pip uninstall -y $(TARGET) || true
